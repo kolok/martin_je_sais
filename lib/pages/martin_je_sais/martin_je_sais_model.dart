@@ -1,16 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
-import '/custom_component/error_modale/error_modale_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'martin_je_sais_widget.dart' show MartinJeSaisWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class MartinJeSaisModel extends FlutterFlowModel<MartinJeSaisWidget> {
   ///  Local state fields for this page.
@@ -26,25 +17,24 @@ class MartinJeSaisModel extends FlutterFlowModel<MartinJeSaisWidget> {
   ScrollController? listViewController;
   // State field(s) for PromptTextField widget.
   FocusNode? promptTextFieldFocusNode;
-  TextEditingController? promptTextFieldController;
-  String? Function(BuildContext, String?)? promptTextFieldControllerValidator;
+  TextEditingController? promptTextFieldTextController;
+  String? Function(BuildContext, String?)?
+      promptTextFieldTextControllerValidator;
   // Stores action output result for [Backend Call - API (ChatGPT)] action in IconButton widget.
   ApiCallResponse? chatGPTResponse;
+  // Stores action output result for [Custom Action - convertListToJson] action in IconButton widget.
+  List<dynamic>? jsonOutput;
 
-  /// Initialization and disposal methods.
-
+  @override
   void initState(BuildContext context) {
     listViewController = ScrollController();
   }
 
+  @override
   void dispose() {
     unfocusNode.dispose();
     listViewController?.dispose();
     promptTextFieldFocusNode?.dispose();
-    promptTextFieldController?.dispose();
+    promptTextFieldTextController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

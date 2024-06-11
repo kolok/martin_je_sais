@@ -3,22 +3,20 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'error_modale_model.dart';
 export 'error_modale_model.dart';
 
 class ErrorModaleWidget extends StatefulWidget {
   const ErrorModaleWidget({
-    Key? key,
+    super.key,
     this.errorMessage,
-  }) : super(key: key);
+  });
 
   final String? errorMessage;
 
   @override
-  _ErrorModaleWidgetState createState() => _ErrorModaleWidgetState();
+  State<ErrorModaleWidget> createState() => _ErrorModaleWidgetState();
 }
 
 class _ErrorModaleWidgetState extends State<ErrorModaleWidget> {
@@ -61,14 +59,15 @@ class _ErrorModaleWidgetState extends State<ErrorModaleWidget> {
             children: [
               Expanded(
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Text(
                       'Error',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Roboto',
                             fontSize: 28.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -76,11 +75,11 @@ class _ErrorModaleWidgetState extends State<ErrorModaleWidget> {
                 ),
               ),
               FlutterFlowIconButton(
-                borderColor: Color(0x004B39EF),
+                borderColor: const Color(0x004B39EF),
                 borderRadius: 20.0,
                 borderWidth: 0.0,
                 buttonSize: 40.0,
-                fillColor: Color(0x004B39EF),
+                fillColor: const Color(0x004B39EF),
                 icon: Icon(
                   Icons.close,
                   color: FlutterFlowTheme.of(context).info,
@@ -94,7 +93,7 @@ class _ErrorModaleWidgetState extends State<ErrorModaleWidget> {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +101,10 @@ class _ErrorModaleWidgetState extends State<ErrorModaleWidget> {
                   Expanded(
                     child: Text(
                       FFAppState().errorDisplayed,
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ),
                 ],
@@ -114,9 +116,9 @@ class _ErrorModaleWidgetState extends State<ErrorModaleWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       Navigator.pop(context);
@@ -127,17 +129,18 @@ class _ErrorModaleWidgetState extends State<ErrorModaleWidget> {
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Readex Pro',
                                 color: Colors.white,
+                                letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),

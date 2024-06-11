@@ -5,17 +5,15 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'setting_page_model.dart';
 export 'setting_page_model.dart';
 
 class SettingPageWidget extends StatefulWidget {
-  const SettingPageWidget({Key? key}) : super(key: key);
+  const SettingPageWidget({super.key});
 
   @override
-  _SettingPageWidgetState createState() => _SettingPageWidgetState();
+  State<SettingPageWidget> createState() => _SettingPageWidgetState();
 }
 
 class _SettingPageWidgetState extends State<SettingPageWidget> {
@@ -42,15 +40,6 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Scaffold(
@@ -60,13 +49,16 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primary,
         automaticallyImplyLeading: true,
         title: Align(
-          alignment: AlignmentDirectional(-1.0, 0.0),
+          alignment: const AlignmentDirectional(-1.0, 0.0),
           child: Text(
             'Paramètres',
-            style: FlutterFlowTheme.of(context).titleSmall,
+            style: FlutterFlowTheme.of(context).titleSmall.override(
+                  fontFamily: 'Readex Pro',
+                  letterSpacing: 0.0,
+                ),
           ),
         ),
-        actions: [],
+        actions: const [],
         centerTitle: false,
         elevation: 0.0,
       ),
@@ -91,7 +83,7 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                 ],
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,11 +93,16 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 25.0, 0.0, 0.0),
                             child: Text(
                               'Choisissez un model',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -115,7 +112,7 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 10.0, 0.0, 0.0),
                           child: FlutterFlowDropDown<String>(
                             controller: _model.dropDownValueController ??=
@@ -129,21 +126,28 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                               'gpt-3.5-turbo-1106',
                               'gpt-4',
                               'gpt-4-32k',
-                              'gpt-4-1106-preview'
+                              'gpt-4-1106-preview',
+                              'gpt-4o'
                             ]),
-                            optionLabels: [
+                            optionLabels: const [
                               'gpt-3.5-turbo',
                               'gpt-3.5-turbo-16k',
                               'gpt-3.5-turbo-1106',
                               'gpt-4',
                               'gpt-4-32k',
-                              'gpt-4-1106-preview'
+                              'gpt-4-1106-preview',
+                              'gpt-4o'
                             ],
                             onChanged: (val) =>
                                 setState(() => _model.dropDownValue = val),
                             width: 300.0,
                             height: 50.0,
-                            textStyle: FlutterFlowTheme.of(context).bodyMedium,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
                             hintText: 'Sélectionnez un modèle chat GPT',
                             icon: Icon(
                               Icons.keyboard_arrow_down_rounded,
@@ -156,7 +160,7 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                             borderColor: FlutterFlowTheme.of(context).alternate,
                             borderWidth: 2.0,
                             borderRadius: 8.0,
-                            margin: EdgeInsetsDirectional.fromSTEB(
+                            margin: const EdgeInsetsDirectional.fromSTEB(
                                 16.0, 4.0, 16.0, 4.0),
                             hidesUnderline: true,
                             isOverButton: true,
@@ -171,11 +175,16 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               'Connectez vous sur votre compte Open AI, créez une clé d\'API et reportez là ici',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -186,7 +195,7 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 16.0, 0.0, 0.0),
                             child: TextFormField(
                               controller: _model.textController,
@@ -194,11 +203,19 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Clé d\'API Open AI',
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
+                                    ),
                                 hintText: 'sk-…',
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
+                                    ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
@@ -236,7 +253,8 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Readex Pro',
-                                    color: Color(0xFFDBE2E7),
+                                    color: const Color(0xFFDBE2E7),
+                                    letterSpacing: 0.0,
                                   ),
                               validator: _model.textControllerValidator
                                   .asValidator(context),
@@ -250,11 +268,16 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               _model.testResultToDisplay!,
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -265,11 +288,16 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               _model.textErrorDisplayed!,
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -295,23 +323,20 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                         model: _model.dropDownValue,
                       );
                       if ((_model.chatGPTResponse?.succeeded ?? true)) {
-                        setState(() {
-                          FFAppState().chatGPTAppKey =
-                              _model.textController.text;
-                          FFAppState().chatGPTModel = _model.dropDownValue!;
-                        });
-                        setState(() {
-                          _model.testResultToDisplay =
-                              'Clé d\'API testée avec succès';
-                          _model.textErrorDisplayed = '';
-                        });
+                        FFAppState().chatGPTAppKey = _model.textController.text;
+                        FFAppState().chatGPTModel = _model.dropDownValue!;
+                        setState(() {});
+                        _model.testResultToDisplay =
+                            'Clé d\'API testée avec succès';
+                        _model.textErrorDisplayed = '';
+                        setState(() {});
                         await Future.delayed(
                             const Duration(milliseconds: 3000));
 
                         context.pushNamed(
                           'MartinJeSais',
                           extra: <String, dynamic>{
-                            kTransitionInfoKey: TransitionInfo(
+                            kTransitionInfoKey: const TransitionInfo(
                               hasTransition: true,
                               transitionType: PageTransitionType.leftToRight,
                               duration: Duration(milliseconds: 300),
@@ -319,13 +344,12 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                           },
                         );
                       } else {
-                        setState(() {
-                          _model.testResultToDisplay = 'Test failed !!!';
-                          _model.textErrorDisplayed = getJsonField(
-                            (_model.chatGPTResponse?.jsonBody ?? ''),
-                            r'''$.error.message''',
-                          ).toString();
-                        });
+                        _model.testResultToDisplay = 'Test failed !!!';
+                        _model.textErrorDisplayed = getJsonField(
+                          (_model.chatGPTResponse?.jsonBody ?? ''),
+                          r'''$.error.message''',
+                        ).toString();
+                        setState(() {});
                       }
 
                       setState(() {});
@@ -335,17 +359,18 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                       width: 270.0,
                       height: 50.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Readex Pro',
                                 color: Colors.white,
+                                letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),

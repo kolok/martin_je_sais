@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'backend/api_requests/api_manager.dart';
+import '/backend/schema/structs/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -35,33 +34,52 @@ class FFAppState extends ChangeNotifier {
 
   String _errorDisplayed = '';
   String get errorDisplayed => _errorDisplayed;
-  set errorDisplayed(String _value) {
-    _errorDisplayed = _value;
+  set errorDisplayed(String value) {
+    _errorDisplayed = value;
   }
 
   String _chatGPTAppKey = '';
   String get chatGPTAppKey => _chatGPTAppKey;
-  set chatGPTAppKey(String _value) {
-    _chatGPTAppKey = _value;
-    prefs.setString('ff_chatGPTAppKey', _value);
+  set chatGPTAppKey(String value) {
+    _chatGPTAppKey = value;
+    prefs.setString('ff_chatGPTAppKey', value);
   }
 
   String _chatGPTModel = 'gpt-3.5-turbo';
   String get chatGPTModel => _chatGPTModel;
-  set chatGPTModel(String _value) {
-    _chatGPTModel = _value;
-    prefs.setString('ff_chatGPTModel', _value);
+  set chatGPTModel(String value) {
+    _chatGPTModel = value;
+    prefs.setString('ff_chatGPTModel', value);
   }
-}
 
-LatLng? _latLngFromString(String? val) {
-  if (val == null) {
-    return null;
+  List<ChatResponseStruct> _chatHistory = [];
+  List<ChatResponseStruct> get chatHistory => _chatHistory;
+  set chatHistory(List<ChatResponseStruct> value) {
+    _chatHistory = value;
   }
-  final split = val.split(',');
-  final lat = double.parse(split.first);
-  final lng = double.parse(split.last);
-  return LatLng(lat, lng);
+
+  void addToChatHistory(ChatResponseStruct value) {
+    _chatHistory.add(value);
+  }
+
+  void removeFromChatHistory(ChatResponseStruct value) {
+    _chatHistory.remove(value);
+  }
+
+  void removeAtIndexFromChatHistory(int index) {
+    _chatHistory.removeAt(index);
+  }
+
+  void updateChatHistoryAtIndex(
+    int index,
+    ChatResponseStruct Function(ChatResponseStruct) updateFn,
+  ) {
+    _chatHistory[index] = updateFn(_chatHistory[index]);
+  }
+
+  void insertAtIndexInChatHistory(int index, ChatResponseStruct value) {
+    _chatHistory.insert(index, value);
+  }
 }
 
 void _safeInit(Function() initializeField) {

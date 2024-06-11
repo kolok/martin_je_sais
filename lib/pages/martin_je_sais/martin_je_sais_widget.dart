@@ -1,23 +1,22 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/custom_component/error_modale/error_modale_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'martin_je_sais_model.dart';
 export 'martin_je_sais_model.dart';
 
 class MartinJeSaisWidget extends StatefulWidget {
-  const MartinJeSaisWidget({Key? key}) : super(key: key);
+  const MartinJeSaisWidget({super.key});
 
   @override
-  _MartinJeSaisWidgetState createState() => _MartinJeSaisWidgetState();
+  State<MartinJeSaisWidget> createState() => _MartinJeSaisWidgetState();
 }
 
 class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
@@ -32,13 +31,12 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (FFAppState().chatGPTAppKey == null ||
-          FFAppState().chatGPTAppKey == '') {
+      if (FFAppState().chatGPTAppKey == '') {
         context.pushNamed('settingPage');
       }
     });
 
-    _model.promptTextFieldController ??= TextEditingController();
+    _model.promptTextFieldTextController ??= TextEditingController();
     _model.promptTextFieldFocusNode ??= FocusNode();
   }
 
@@ -51,15 +49,6 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -73,15 +62,16 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Align(
-            alignment: AlignmentDirectional(-1.0, 0.0),
+            alignment: const AlignmentDirectional(-1.0, 0.0),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(50.0, 0.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(50.0, 0.0, 0.0, 0.0),
               child: Text(
                 'Martin je sais',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Readex Pro',
                       color: FlutterFlowTheme.of(context).info,
                       fontSize: 16.0,
+                      letterSpacing: 0.0,
                     ),
               ),
             ),
@@ -98,9 +88,8 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                 size: 30.0,
               ),
               onPressed: () async {
-                setState(() {
-                  _model.displayMenu = !_model.displayMenu;
-                });
+                _model.displayMenu = !_model.displayMenu;
+                setState(() {});
               },
             ),
           ],
@@ -117,7 +106,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                   Expanded(
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
                       child: Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
                         height: MediaQuery.sizeOf(context).height * 1.0,
@@ -127,22 +116,17 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                         ),
                         child: Builder(
                           builder: (context) {
-                            final chat = _model.chatHistory?.toList() ?? [];
+                            final chatHisto = FFAppState().chatHistory.toList();
                             return ListView.builder(
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.vertical,
-                              itemCount: chat.length,
-                              itemBuilder: (context, chatIndex) {
-                                final chatItem = chat[chatIndex];
+                              itemCount: chatHisto.length,
+                              itemBuilder: (context, chatHistoIndex) {
+                                final chatHistoItem = chatHisto[chatHistoIndex];
                                 return Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    if ((String role) {
-                                      return role != "user";
-                                    }(getJsonField(
-                                      chatItem,
-                                      r'''$.role''',
-                                    ).toString()))
+                                    if (chatHistoItem.author == 'user')
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         crossAxisAlignment:
@@ -150,7 +134,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.all(10.0),
+                                              padding: const EdgeInsets.all(10.0),
                                               child: Container(
                                                 width: 100.0,
                                                 decoration: BoxDecoration(
@@ -167,7 +151,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                                   ),
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsets.all(10.0),
+                                                  padding: const EdgeInsets.all(10.0),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -176,14 +160,17 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        getJsonField(
-                                                          chatItem,
-                                                          r'''$.content''',
-                                                        ).toString(),
+                                                        chatHistoItem.content,
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyMedium,
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
                                                     ],
                                                   ),
@@ -193,12 +180,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                           ),
                                         ],
                                       ),
-                                    if ((String role) {
-                                      return role == "user";
-                                    }(getJsonField(
-                                      chatItem,
-                                      r'''$.role''',
-                                    ).toString()))
+                                    if (chatHistoItem.author != 'user')
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -206,7 +188,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsets.all(10.0),
+                                              padding: const EdgeInsets.all(10.0),
                                               child: Container(
                                                 width: 100.0,
                                                 decoration: BoxDecoration(
@@ -223,7 +205,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                                   ),
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsets.all(10.0),
+                                                  padding: const EdgeInsets.all(10.0),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -231,14 +213,17 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                        getJsonField(
-                                                          chatItem,
-                                                          r'''$.content''',
-                                                        ).toString(),
+                                                        chatHistoItem.content,
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyMedium,
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
                                                     ],
                                                   ),
@@ -259,9 +244,9 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
+                    alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
                         height: 100.0,
@@ -275,19 +260,28 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 8.0, 0.0),
                                 child: TextFormField(
-                                  controller: _model.promptTextFieldController,
+                                  controller:
+                                      _model.promptTextFieldTextController,
                                   focusNode: _model.promptTextFieldFocusNode,
                                   autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Quelle est ta question',
                                     labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium,
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          letterSpacing: 0.0,
+                                        ),
                                     hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium,
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          letterSpacing: 0.0,
+                                        ),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
@@ -321,51 +315,58 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
                                   maxLines: 3,
                                   minLines: 1,
                                   validator: _model
-                                      .promptTextFieldControllerValidator
+                                      .promptTextFieldTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
                             ),
-                            FlutterFlowIconButton(
-                              borderColor: Color(0x00FFFFFF),
-                              borderRadius: 20.0,
-                              buttonSize: 40.0,
-                              fillColor: Color(0x00FFFFFF),
-                              icon: Icon(
-                                Icons.send,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 24.0,
-                              ),
-                              showLoadingIndicator: true,
-                              onPressed: () async {
-                                setState(() {
+                            Opacity(
+                              opacity: 0.0,
+                              child: FlutterFlowIconButton(
+                                borderColor: const Color(0x00FFFFFF),
+                                borderRadius: 20.0,
+                                buttonSize: 40.0,
+                                fillColor: const Color(0x00FFFFFF),
+                                icon: Icon(
+                                  Icons.send,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 24.0,
+                                ),
+                                showLoadingIndicator: true,
+                                onPressed: () async {
                                   _model.chatHistory =
                                       functions.saveChatHistory(
                                           _model.chatHistory,
                                           functions.convertToJSON(_model
-                                              .promptTextFieldController.text));
-                                });
-                                await Future.delayed(
-                                    const Duration(milliseconds: 300));
-                                await _model.listViewController?.animateTo(
-                                  _model.listViewController!.position
-                                      .maxScrollExtent,
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.ease,
-                                );
-                                _model.chatGPTResponse = await ChatGPTCall.call(
-                                  apiKey: FFAppState().chatGPTAppKey,
-                                  promptJson: _model.chatHistory,
-                                  model: FFAppState().chatGPTModel,
-                                );
-                                if ((_model.chatGPTResponse?.succeeded ??
-                                    true)) {
-                                  setState(() {
+                                              .promptTextFieldTextController
+                                              .text));
+                                  setState(() {});
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 300));
+                                  await _model.listViewController?.animateTo(
+                                    _model.listViewController!.position
+                                        .maxScrollExtent,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
+                                  _model.chatGPTResponse =
+                                      await ChatGPTCall.call(
+                                    apiKey: FFAppState().chatGPTAppKey,
+                                    promptJson: _model.chatHistory,
+                                    model: FFAppState().chatGPTModel,
+                                  );
+                                  if ((_model.chatGPTResponse?.succeeded ??
+                                      true)) {
                                     _model.chatHistory =
                                         functions.saveChatHistory(
                                             _model.chatHistory,
@@ -375,49 +376,99 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                                   ''),
                                               r'''$.choices[:].message''',
                                             ));
-                                  });
-                                  setState(() {
-                                    _model.promptTextFieldController?.clear();
-                                  });
-                                } else {
-                                  setState(() {
+                                    setState(() {});
+                                    setState(() {
+                                      _model.promptTextFieldTextController
+                                          ?.clear();
+                                    });
+                                  } else {
                                     FFAppState().errorDisplayed = getJsonField(
                                       (_model.chatGPTResponse?.jsonBody ?? ''),
                                       r'''$.error.message''',
                                     ).toString();
-                                  });
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    enableDrag: false,
-                                    context: context,
-                                    builder: (context) {
-                                      return GestureDetector(
-                                        onTap: () => _model
-                                                .unfocusNode.canRequestFocus
-                                            ? FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode)
-                                            : FocusScope.of(context).unfocus(),
-                                        child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: Container(
-                                            height: 250.0,
-                                            child: ErrorModaleWidget(),
+                                    setState(() {});
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () => _model
+                                                  .unfocusNode.canRequestFocus
+                                              ? FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _model.unfocusNode)
+                                              : FocusScope.of(context)
+                                                  .unfocus(),
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: const SizedBox(
+                                              height: 250.0,
+                                              child: ErrorModaleWidget(),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ).then((value) => safeSetState(() {}));
-                                }
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
+                                  }
 
-                                await Future.delayed(
-                                    const Duration(milliseconds: 500));
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 500));
+                                  await _model.listViewController?.animateTo(
+                                    _model.listViewController!.position
+                                        .maxScrollExtent,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
+
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                            FlutterFlowIconButton(
+                              borderColor: const Color(0x00FFFFFF),
+                              borderRadius: 20.0,
+                              buttonSize: 40.0,
+                              fillColor: const Color(0x00FFFFFF),
+                              icon: Icon(
+                                Icons.gps_fixed,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 24.0,
+                              ),
+                              showLoadingIndicator: true,
+                              onPressed: () async {
+                                FFAppState()
+                                    .addToChatHistory(ChatResponseStruct(
+                                  author: 'user',
+                                  content:
+                                      _model.promptTextFieldTextController.text,
+                                ));
+                                setState(() {});
+                                setState(() {
+                                  _model.promptTextFieldTextController?.clear();
+                                });
+                                _model.jsonOutput =
+                                    await actions.convertListToJson(
+                                  FFAppState().chatHistory.toList(),
+                                );
+                                await actions.streamApiResponse(
+                                  _model.jsonOutput!.toList(),
+                                  () async {
+                                    setState(() {});
+                                    await _model.listViewController?.animateTo(
+                                      _model.listViewController!.position
+                                          .maxScrollExtent,
+                                      duration: const Duration(milliseconds: 100),
+                                      curve: Curves.ease,
+                                    );
+                                  },
+                                );
                                 await _model.listViewController?.animateTo(
                                   _model.listViewController!.position
                                       .maxScrollExtent,
-                                  duration: Duration(milliseconds: 300),
+                                  duration: const Duration(milliseconds: 100),
                                   curve: Curves.ease,
                                 );
 
@@ -433,34 +484,33 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
               ),
               if (_model.displayMenu)
                 Align(
-                  alignment: AlignmentDirectional(1.0, -1.0),
+                  alignment: const AlignmentDirectional(1.0, -1.0),
                   child: Container(
                     width: double.infinity,
                     height: 130.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
-                    alignment: AlignmentDirectional(1.0, 0.0),
+                    alignment: const AlignmentDirectional(1.0, 0.0),
                     child: Visibility(
                       visible: _model.displayMenu,
                       child: Align(
-                        alignment: AlignmentDirectional(1.0, 0.0),
+                        alignment: const AlignmentDirectional(1.0, 0.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(1.0, 0.0),
+                              alignment: const AlignmentDirectional(1.0, 0.0),
                               child: Padding(
-                                padding: EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    setState(() {
-                                      _model.displayMenu = !_model.displayMenu;
-                                    });
+                                    _model.displayMenu = !_model.displayMenu;
+                                    setState(() {});
 
                                     context.pushNamed('settingPage');
                                   },
@@ -475,7 +525,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
-                                            borderRadius: BorderRadius.only(
+                                            borderRadius: const BorderRadius.only(
                                               bottomLeft: Radius.circular(0.0),
                                               bottomRight: Radius.circular(0.0),
                                               topLeft: Radius.circular(0.0),
@@ -490,14 +540,19 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                           ),
                                           child: Align(
                                             alignment:
-                                                AlignmentDirectional(1.0, 0.0),
+                                                const AlignmentDirectional(1.0, 0.0),
                                             child: Padding(
-                                              padding: EdgeInsets.all(10.0),
+                                              padding: const EdgeInsets.all(10.0),
                                               child: Text(
                                                 'Paramètres',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyMedium,
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
                                               ),
                                             ),
                                           ),
@@ -509,7 +564,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   10.0, 0.0, 10.0, 10.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
@@ -517,12 +572,10 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  setState(() {
-                                    _model.chatHistory = null;
-                                  });
-                                  setState(() {
-                                    _model.displayMenu = !_model.displayMenu;
-                                  });
+                                  _model.chatHistory = null;
+                                  setState(() {});
+                                  _model.displayMenu = !_model.displayMenu;
+                                  setState(() {});
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -543,14 +596,19 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                         ),
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(1.0, 0.0),
+                                              const AlignmentDirectional(1.0, 0.0),
                                           child: Padding(
-                                            padding: EdgeInsets.all(10.0),
+                                            padding: const EdgeInsets.all(10.0),
                                             child: Text(
                                               'Nouvelle conversation',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyMedium,
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        letterSpacing: 0.0,
+                                                      ),
                                             ),
                                           ),
                                         ),

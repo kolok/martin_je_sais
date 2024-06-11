@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -11,14 +12,14 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 class ChatGPTCall {
   static Future<ApiCallResponse> call({
     String? apiKey = '',
-    dynamic? promptJson,
+    dynamic promptJson,
     String? model = 'gpt-3.5-turbo',
   }) async {
     final prompt = _serializeJson(promptJson);
     final ffApiRequestBody = '''
 {
-  "model": "${model}",
-  "messages": ${prompt}
+  "model": "$model",
+  "messages": $prompt
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'ChatGPT',
@@ -26,7 +27,7 @@ class ChatGPTCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': 'Bearer ${apiKey}',
+        'Authorization': 'Bearer $apiKey',
       },
       params: {},
       body: ffApiRequestBody,
@@ -43,7 +44,7 @@ class ChatGPTCall {
         response,
         r'''$.choices[:].message.content''',
       ));
-  static dynamic? message(dynamic response) => getJsonField(
+  static dynamic message(dynamic response) => getJsonField(
         response,
         r'''$.choices[:].message''',
       );
@@ -56,7 +57,7 @@ class ChatGPTCall {
         response,
         r'''$.created''',
       ));
-  static dynamic? returnedError(dynamic response) => getJsonField(
+  static dynamic returnedError(dynamic response) => getJsonField(
         response,
         r'''$.error''',
       );
@@ -78,11 +79,18 @@ class ApiPagingParams {
       'PagingParams(nextPageNumber: $nextPageNumber, numItems: $numItems, lastResponse: $lastResponse,)';
 }
 
+String _toEncodable(dynamic item) {
+  return item;
+}
+
 String _serializeList(List? list) {
   list ??= <String>[];
   try {
-    return json.encode(list);
+    return json.encode(list, toEncodable: _toEncodable);
   } catch (_) {
+    if (kDebugMode) {
+      print("List serialization failed. Returning empty list.");
+    }
     return '[]';
   }
 }
@@ -90,8 +98,11 @@ String _serializeList(List? list) {
 String _serializeJson(dynamic jsonVar, [bool isList = false]) {
   jsonVar ??= (isList ? [] : {});
   try {
-    return json.encode(jsonVar);
+    return json.encode(jsonVar, toEncodable: _toEncodable);
   } catch (_) {
+    if (kDebugMode) {
+      print("Json serialization failed. Returning empty json.");
+    }
     return isList ? '[]' : '{}';
   }
 }
