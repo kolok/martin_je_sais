@@ -1,6 +1,15 @@
 # Martin je sais
 
-A new Flutter project.
+This is a Flutter application build with FlutterFlow. It is a ChatGPT client to use with its own API key.
+
+## Manage its own chatGPT API key
+
+- Visit [OpenAI website](https://platform.openai.com/login?launch) and login
+- Select API
+- Credit some budget
+- Create an API key
+
+Here you are ! copy this API key to your App `Martin je sais`
 
 ## Getting Started
 
@@ -19,6 +28,14 @@ flutter upgrade
 ```sh
 flutter pub get
 ```
+
+### manage image launcher
+
+The image launcher is here for `android`: [./assets/images/app_launcher_icon.png](./assets/images/app_launcher_icon.png)
+
+To install and generate, just launch `flutter pub run flutter_launcher_icons`
+
+Perhaps you'll have to remove the `web/manifest.json` file before build your app bundle
 
 ### Build
 
