@@ -59,26 +59,26 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToChatHistory(ChatResponseStruct value) {
-    _chatHistory.add(value);
+    chatHistory.add(value);
   }
 
   void removeFromChatHistory(ChatResponseStruct value) {
-    _chatHistory.remove(value);
+    chatHistory.remove(value);
   }
 
   void removeAtIndexFromChatHistory(int index) {
-    _chatHistory.removeAt(index);
+    chatHistory.removeAt(index);
   }
 
   void updateChatHistoryAtIndex(
     int index,
     ChatResponseStruct Function(ChatResponseStruct) updateFn,
   ) {
-    _chatHistory[index] = updateFn(_chatHistory[index]);
+    chatHistory[index] = updateFn(_chatHistory[index]);
   }
 
   void insertAtIndexInChatHistory(int index, ChatResponseStruct value) {
-    _chatHistory.insert(index, value);
+    chatHistory.insert(index, value);
   }
 }
 

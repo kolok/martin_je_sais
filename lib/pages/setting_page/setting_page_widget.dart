@@ -322,6 +322,7 @@ class _SettingPageWidgetState extends State<SettingPageWidget> {
                         ],
                         model: _model.dropDownValue,
                       );
+
                       if ((_model.chatGPTResponse?.succeeded ?? true)) {
                         FFAppState().chatGPTAppKey = _model.textController.text;
                         FFAppState().chatGPTModel = _model.dropDownValue!;

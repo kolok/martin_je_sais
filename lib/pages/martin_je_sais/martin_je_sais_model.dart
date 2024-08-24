@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'martin_je_sais_widget.dart' show MartinJeSaisWidget;
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ class MartinJeSaisModel extends FlutterFlowModel<MartinJeSaisWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for ListView widget.
   ScrollController? listViewController;
   // State field(s) for PromptTextField widget.
@@ -20,8 +18,6 @@ class MartinJeSaisModel extends FlutterFlowModel<MartinJeSaisWidget> {
   TextEditingController? promptTextFieldTextController;
   String? Function(BuildContext, String?)?
       promptTextFieldTextControllerValidator;
-  // Stores action output result for [Backend Call - API (ChatGPT)] action in IconButton widget.
-  ApiCallResponse? chatGPTResponse;
   // Stores action output result for [Custom Action - convertListToJson] action in IconButton widget.
   List<dynamic>? jsonOutput;
 
@@ -32,7 +28,6 @@ class MartinJeSaisModel extends FlutterFlowModel<MartinJeSaisWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     listViewController?.dispose();
     promptTextFieldFocusNode?.dispose();
     promptTextFieldTextController?.dispose();

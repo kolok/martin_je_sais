@@ -16,12 +16,14 @@ class ChatResponseStruct extends BaseStruct {
   String? _author;
   String get author => _author ?? '';
   set author(String? val) => _author = val;
+
   bool hasAuthor() => _author != null;
 
   // "content" field.
   String? _content;
   String get content => _content ?? '';
   set content(String? val) => _content = val;
+
   bool hasContent() => _content != null;
 
   static ChatResponseStruct fromMap(Map<String, dynamic> data) =>

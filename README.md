@@ -7,7 +7,7 @@ This is a Flutter application build with FlutterFlow. It is a ChatGPT client to 
 - Visit [OpenAI website](https://platform.openai.com/login?launch) and login
 - Select API
 - Credit some budget
-- Create an API key
+- Create an API key : [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 
 Here you are ! copy this API key to your App `Martin je sais`
 

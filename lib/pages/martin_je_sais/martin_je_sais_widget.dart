@@ -1,13 +1,11 @@
-import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
-import '/custom_component/error_modale/error_modale_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'martin_je_sais_model.dart';
 export 'martin_je_sais_model.dart';
@@ -52,9 +50,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -117,6 +113,7 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                         child: Builder(
                           builder: (context) {
                             final chatHisto = FFAppState().chatHistory.toList();
+
                             return ListView.builder(
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.vertical,
@@ -212,18 +209,15 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end,
                                                     children: [
-                                                      Text(
-                                                        chatHistoItem.content,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Readex Pro',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
+                                                      Container(
+                                                        child: MarkdownBody(
+                                                          data: chatHistoItem
+                                                              .content,
+                                                          selectable: true,
+                                                          onTapLink: (_, url,
+                                                                  __) =>
+                                                              launchURL(url!),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -329,111 +323,13 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                 ),
                               ),
                             ),
-                            Opacity(
-                              opacity: 0.0,
-                              child: FlutterFlowIconButton(
-                                borderColor: const Color(0x00FFFFFF),
-                                borderRadius: 20.0,
-                                buttonSize: 40.0,
-                                fillColor: const Color(0x00FFFFFF),
-                                icon: Icon(
-                                  Icons.send,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 24.0,
-                                ),
-                                showLoadingIndicator: true,
-                                onPressed: () async {
-                                  _model.chatHistory =
-                                      functions.saveChatHistory(
-                                          _model.chatHistory,
-                                          functions.convertToJSON(_model
-                                              .promptTextFieldTextController
-                                              .text));
-                                  setState(() {});
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 300));
-                                  await _model.listViewController?.animateTo(
-                                    _model.listViewController!.position
-                                        .maxScrollExtent,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                  _model.chatGPTResponse =
-                                      await ChatGPTCall.call(
-                                    apiKey: FFAppState().chatGPTAppKey,
-                                    promptJson: _model.chatHistory,
-                                    model: FFAppState().chatGPTModel,
-                                  );
-                                  if ((_model.chatGPTResponse?.succeeded ??
-                                      true)) {
-                                    _model.chatHistory =
-                                        functions.saveChatHistory(
-                                            _model.chatHistory,
-                                            getJsonField(
-                                              (_model.chatGPTResponse
-                                                      ?.jsonBody ??
-                                                  ''),
-                                              r'''$.choices[:].message''',
-                                            ));
-                                    setState(() {});
-                                    setState(() {
-                                      _model.promptTextFieldTextController
-                                          ?.clear();
-                                    });
-                                  } else {
-                                    FFAppState().errorDisplayed = getJsonField(
-                                      (_model.chatGPTResponse?.jsonBody ?? ''),
-                                      r'''$.error.message''',
-                                    ).toString();
-                                    setState(() {});
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () => _model
-                                                  .unfocusNode.canRequestFocus
-                                              ? FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _model.unfocusNode)
-                                              : FocusScope.of(context)
-                                                  .unfocus(),
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: const SizedBox(
-                                              height: 250.0,
-                                              child: ErrorModaleWidget(),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
-                                  }
-
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 500));
-                                  await _model.listViewController?.animateTo(
-                                    _model.listViewController!.position
-                                        .maxScrollExtent,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-
-                                  setState(() {});
-                                },
-                              ),
-                            ),
                             FlutterFlowIconButton(
                               borderColor: const Color(0x00FFFFFF),
                               borderRadius: 20.0,
                               buttonSize: 40.0,
                               fillColor: const Color(0x00FFFFFF),
                               icon: Icon(
-                                Icons.gps_fixed,
+                                Icons.send,
                                 color: FlutterFlowTheme.of(context).primaryText,
                                 size: 24.0,
                               ),
@@ -572,7 +468,11 @@ class _MartinJeSaisWidgetState extends State<MartinJeSaisWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  _model.chatHistory = null;
+                                  setState(() {
+                                    _model.promptTextFieldTextController
+                                        ?.clear();
+                                  });
+                                  FFAppState().chatHistory = [];
                                   setState(() {});
                                   _model.displayMenu = !_model.displayMenu;
                                   setState(() {});

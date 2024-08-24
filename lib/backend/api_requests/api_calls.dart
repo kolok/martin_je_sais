@@ -36,6 +36,7 @@ class ChatGPTCall {
       encodeBodyUtf8: false,
       decodeUtf8: true,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }

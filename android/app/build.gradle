@@ -63,7 +63,7 @@ android {
 
     buildTypes {
         release {
-           signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -73,5 +73,5 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10"
 }
