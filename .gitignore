@@ -1,6 +1,7 @@
 # Miscellaneous
 *.class
 *.log
+*.bak
 *.pyc
 *.swp
 .DS_Store
@@ -8,6 +9,9 @@
 .buildlog/
 .history
 .svn/
+.cxx/
+.cursor/
+.vscode/
 
 # IntelliJ related
 *.iml

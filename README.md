@@ -33,6 +33,18 @@ flutter pub get
 
 The image launcher is here for `android`: [./assets/images/app_launcher_icon.png](./assets/images/app_launcher_icon.png)
 
+add the following config in pubspec.yaml
+
+```yaml
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
+  image_path: 'assets/images/app_launcher_icon.png'
+```
+
 To install and generate, just launch `flutter pub run flutter_launcher_icons`
 
 Perhaps you'll have to remove the `web/manifest.json` file before build your app bundle
@@ -70,3 +82,9 @@ android {
 ```
 
 And keep the file `android/key.properties` with the signature
+
+#### Denière commande de build
+
+```sh
+flutter build appbundle --build-name 2.0.0 --build-number 11
+```
